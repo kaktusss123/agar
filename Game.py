@@ -42,23 +42,30 @@ class Game:
                     TexturedBall(pygame.image.load('./res/ball_40.png'), SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED))
 
             for ball in self.balls_list:
-                ball.draw(self.screen)
                 ball.move()
+                ball.draw(self.screen)
+                if ball.y + ball.size[2] < 0:
+                    self.balls_list.remove(ball)
 
             pygame.display.flip()
 
-            self.clock.tick(30)
-
+            self.clock.tick(60)
+            
     def handle_events(self):
         for event in pygame.event.get():
+            # print(event)
             if event.type == pygame.QUIT:
                 self.run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == 32:
                     self.append = True
-            elif event.type == pygame.KEYUP:
+            if event.type == pygame.KEYUP:
                 if event.key == 32:
                     self.append = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                for ball in self.balls_list:
+                    if ((ball.dynamic_x - event.pos[0]) ** 2 + (ball.y - event.pos[1]) ** 2) ** 0.5 < ball.size[2]:
+                        self.balls_list.remove(ball)
 
 
 if __name__ == '__main__':

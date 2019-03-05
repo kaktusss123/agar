@@ -27,6 +27,7 @@ class TexturedBall:
         self.y = screen_height
         self.image = texture
         self.dynamic_x = self.x
+
         self.chaos = randint(0, 500)
         self.speed = randint(1, speed + 1)
 
