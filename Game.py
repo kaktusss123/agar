@@ -1,6 +1,6 @@
 import pygame
 
-from Ball import Ball, TexturedBall
+from Ball import TexturedBall
 
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 600
@@ -42,14 +42,14 @@ class Game:
                     TexturedBall(pygame.image.load('./res/ball_40.png'), SCREEN_WIDTH, SCREEN_HEIGHT, MAX_SPEED))
 
             for ball in self.balls_list:
-                ball.move()
+                ball.move(pygame.mouse.get_pos())
                 ball.draw(self.screen)
                 if ball.y + ball.size[2] < 0:
                     self.balls_list.remove(ball)
 
             pygame.display.flip()
 
-            self.clock.tick(60)
+            self.clock.tick(30)
             
     def handle_events(self):
         for event in pygame.event.get():

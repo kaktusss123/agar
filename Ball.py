@@ -31,9 +31,13 @@ class TexturedBall:
         self.chaos = randint(0, 500)
         self.speed = randint(1, speed + 1)
 
-    def move(self):
+    def move(self, mouse_pos):
         self.y -= self.speed
+        if ((self.dynamic_x - mouse_pos[0]) ** 2 + (self.y - mouse_pos[1]) ** 2) ** 0.5 <= 100:
+            self.y += 50 / (self.y - mouse_pos[1])
+            self.x += 50 / (self.x - mouse_pos[0])
         self.dynamic_x = self.x + 100 * sin((self.y + self.chaos) / 60)
+
 
     def draw(self, screen):
         screen.blit(self.image, (self.dynamic_x, self.y))
